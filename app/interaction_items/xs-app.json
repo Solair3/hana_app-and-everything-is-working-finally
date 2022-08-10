@@ -4,6 +4,12 @@
   "routes": [
       
     {
+        "source": "/catalog/(.*)",
+        "destination": "hana-app-api",
+        "csrfProtection": true,
+        "authenticationType": "xsuaa"
+    },
+    {
       "source": "^/resources/(.*)$",
       "target": "/resources/$1",
       "authenticationType": "none",

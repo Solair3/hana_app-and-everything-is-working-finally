@@ -13,6 +13,7 @@ modules:
         properties:
           srv-url: '${default-url}'
     parameters:
+      host: ${appname}
       buildpack: nodejs_buildpack
     build-parameters:
       builder: npm-ci
@@ -103,6 +104,13 @@ resources:
                 ProxyType: Internet
                 Type: HTTP
                 URL: 'https://ui5.sap.com'
+              - Name: hana-app-api
+                Authentication: NoAuthentication
+                ProxyType: Internet
+                HTML5.ForwardAuthToken: true
+                HTML5.DynamicDestination: true
+                Type: HTTP
+                URL: https://${appname}.${default-domain}
             existing_destinations_policy: update
         version: 1.0.0
       service: destination
@@ -111,6 +119,7 @@ resources:
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
+  appname: 1ee96fea-28f7-4645-a159-e530f202ea18
 build-parameters:
   before-all:
     - builder: custom
