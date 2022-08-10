@@ -8,12 +8,13 @@ modules:
     path: gen/srv
     requires:
       - name: eve-db
+      - name: uaa_eve
     provides:
       - name: srv-api
         properties:
           srv-url: '${default-url}'
     parameters:
-      host: ${appname}
+      host: '${appname}'
       buildpack: nodejs_buildpack
     build-parameters:
       builder: npm-ci
@@ -110,7 +111,7 @@ resources:
                 HTML5.ForwardAuthToken: true
                 HTML5.DynamicDestination: true
                 Type: HTTP
-                URL: https://${appname}.${default-domain}
+                URL: 'https://${appname}.${default-domain}'
             existing_destinations_policy: update
         version: 1.0.0
       service: destination

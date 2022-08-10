@@ -65,6 +65,9 @@
         "requires": {
             "db": {
                 "kind": "hana-cloud"
+            },
+            "uaa": {
+                "kind": "xsuaa"
             }
         },
         "hana": {

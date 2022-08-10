@@ -1,10 +1,11 @@
 {
     "welcomeFile": "/interactionitems",
-  "authenticationMethod": "none",
+  "authenticationMethod": "route",
   "routes": [{
       "source": "/catalog/(.*)",
       "destination": "srv-api",
-      "csrfProtection": true
+      "csrfProtection": true,
+      "authenticationType": "xsuaa"
   }
   ]
 }
