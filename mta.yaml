@@ -16,6 +16,9 @@ modules:
     parameters:
       host: '${appname}'
       buildpack: nodejs_buildpack
+      disk-quota: 512M
+      memory: 128M
+     
     build-parameters:
       builder: npm-ci
   - name: eve-db-deployer
@@ -25,6 +28,7 @@ modules:
       - name: eve-db
     parameters:
       buildpack: nodejs_buildpack
+   
   - name: app
     type: approuter.nodejs
     path: app
@@ -43,8 +47,8 @@ modules:
           name: ui5
           url: 'https://ui5.sap.com'
     parameters:
-      disk-quota: 1024M
-      memory: 1024M
+      disk-quota: 512M
+      memory: 128M
   - name: eve_ui_deployer
     type: com.sap.application.content
     path: .
