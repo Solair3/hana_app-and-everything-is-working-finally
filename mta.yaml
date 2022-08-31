@@ -14,7 +14,6 @@ modules:
         properties:
           srv-url: '${default-url}'
     parameters:
-      host: '${appname}'
       buildpack: nodejs_buildpack
       disk-quota: 512M
       memory: 128M
@@ -98,6 +97,8 @@ resources:
       service-plan: app-host
   - name: eve-destination-service
     type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv-api
     parameters:
       config:
         HTML5Runtime_enabled: false
@@ -115,7 +116,7 @@ resources:
                 HTML5.ForwardAuthToken: true
                 HTML5.DynamicDestination: true
                 Type: HTTP
-                URL: 'https://${appname}.${default-domain}'
+                URL: '~{srv-api/srv-url}'
             existing_destinations_policy: update
         version: 1.0.0
       service: destination
@@ -124,7 +125,6 @@ resources:
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
-  appname: 1ee96fea-28f7-4645-a159-e530f202ea18
 build-parameters:
   before-all:
     - builder: custom
