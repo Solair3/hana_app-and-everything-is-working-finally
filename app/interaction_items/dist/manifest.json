@@ -1,6 +1,21 @@
 {
     "_version": "1.40.0",
     "sap.app": {
+        "crossNavigation": {
+            "inbounds": {
+                "fe-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Sample",
+                    "action": "display",
+                    "title": "CAP Sample App",
+                    "subTitle": "",
+                    "icon": ""
+                }
+            }
+        },
         "id": "interactionitems",
         "type": "application",
         "i18n": "i18n/i18n.properties",
@@ -57,6 +72,10 @@
                 "sap.ui.table": {},
                 "sap.ushell": {}
             }
+        },
+        "sap.cloud": {
+            "public": true,
+            "service": "eve.app"
         },
         "contentDensities": {
             "compact": true,

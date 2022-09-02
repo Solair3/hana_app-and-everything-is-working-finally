@@ -26,8 +26,8 @@ modules:
     requires:
       - name: eve-db
     parameters:
-      buildpack: nodejs_buildpack
-   
+      buildpack: nodejs_buildpack    
+
   - name: app
     type: approuter.nodejs
     path: app
@@ -72,6 +72,36 @@ modules:
         - npm install
         - 'npm run build:cf'
       supported-platforms: []
+  - name: eve-destination-content
+    type: com.sap.application.content
+    requires:
+      - name: uaa_eve
+        parameters:
+          service-key:
+            name: uaa_eve-key
+      - name: eve_html_repo_host
+        parameters:
+          service-key:
+            name: eve_html_repo_host-key
+      - name: eve-destination-service
+        parameters:
+          content-target: true
+    parameters:
+        content:
+          subaccount:
+            destinations:
+              - Name: eve_app_eve_html_repo_host
+                ServiceInstanceName: eve-html5-app-host-service
+                ServiceKeyName: eve_html_repo_host-key
+                sap.cloud.service: eve.app
+              - Authentication: OAuth2UserTokenExchange
+                Name: eve_app_uaa_eve
+                ServiceInstanceName: eve-xsuaa-service
+                ServiceKeyName: uaa_eve-key
+                sap.cloud.service: eve.app
+            existing_destinations_policy: update
+    build-parameters:
+        no-source: true
 resources:
   - name: eve-db
     type: com.sap.xs.hdi-container
@@ -94,6 +124,7 @@ resources:
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
+      service-name: eve-html5-app-host-service
       service-plan: app-host
   - name: eve-destination-service
     type: org.cloudfoundry.managed-service
@@ -101,8 +132,19 @@ resources:
       - name: srv-api
     parameters:
       config:
-        HTML5Runtime_enabled: false
+        HTML5Runtime_enabled: true
         init_data:
+          subaccount:
+           existing_destinations_policy: update
+           destinations:
+             - Name: cap-launchpad
+               Description: CAP sample service
+               Authentication: NoAuthentication
+               ProxyType: Internet
+               Type: HTTP
+               URL: ~{srv-api/srv-url}
+               HTML5.DynamicDestination: true
+               HTML5.ForwardAuthToken: true
           instance:
             destinations:
               - Authentication: NoAuthentication

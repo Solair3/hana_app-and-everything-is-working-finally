@@ -2,7 +2,12 @@
   "welcomeFile": "/index.html",
   "authenticationMethod": "route",
   "routes": [
-      
+    {
+        "authenticationType": "none",
+        "csrfProtection": false,
+        "source": "^/catalog/",
+        "destination": "cap-launchpad"
+      },
     {
         "source": "/catalog/(.*)",
         "destination": "hana-app-api",
@@ -21,6 +26,7 @@
       "authenticationType": "none",
       "destination": "ui5"
     },
+    
     {
       "source": "^(.*)$",
       "target": "$1",
